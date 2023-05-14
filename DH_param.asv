@@ -1,0 +1,24 @@
+%Function to calculate the position of the end effector
+%Similar to Link_Trans_Matrix function but takes all the variables as
+%inputs and returns the overall transformation matrix
+
+function [t07] = DH_param (d1, d2 ,d4 , d6, a3, a5,  theta2, theta4, theta5, theta6, theta7)
+
+
+
+
+%Function calls to calculate the transformation matrics for joint i wrt i-1
+t01 = Trans_Matrix(0, 0, d1, 0);
+t12 = Trans_Matrix(0, -90, d2, theta2);
+t23 = Trans_Matrix(a3, 0, d4, 0);
+t34 = Trans_Matrix(a5, 90, 0, (theta4+90));
+t45 = Trans_Matrix(0, 90, d6, theta5);
+t56 = Trans_Matrix(0, -90, 0, theta6);
+t67 = Trans_Matrix(0, 90, 0, theta7);
+
+
+%Calculation of overall transformation matrix from frame 0 to frame 7
+
+t07 = t01*t12*t23*t34*t45*t56*t67;
+
+
